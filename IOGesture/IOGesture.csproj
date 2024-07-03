@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.5" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="5.5.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Remove="wwwroot\ts\TinyGestureInstance.ts" />
+    <TypeScriptCompile Remove="wwwroot\ts\IOGesture.ts" />
+    <TypeScriptCompile Remove="wwwroot\tinygesture.ts" />
+    <TypeScriptCompile Remove="wwwroot\IOGesture.ts" />
+    <TypeScriptCompile Remove="wwwroot\PanEndModel.ts" />
+    <TypeScriptCompile Remove="wwwroot\GestureOptions.ts" />
+    <TypeScriptCompile Remove="wwwroot\PanMoveModel.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\GestureOptions.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\GestureOptions.js.map" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\IOGesture.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\IOGesture.js.map" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\PanEndModel.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\PanEndModel.js.map" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\PanMoveModel.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\PanMoveModel.js.map" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\tinygesture.js" />
+    <_ContentIncludedByDefault Remove="wwwroot\js\tinygesture.js.map" />
+  </ItemGroup>
+
+</Project>

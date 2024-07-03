@@ -1,0 +1,169 @@
+﻿@page "/"
+
+<h2 class="text-5xl bg-gradient-to-r from-fuchsia-200 to-pink-600 bg-clip-text text-transparent mb-10">IOGesture<a class="text-sm text-yellow-200" href="https://github.com/sciactive/tinygesture" target="_blank">TinyGesture.js</a></h2>
+<div class="flex flex-col items-center text-white gap-4">
+    <div class="flex flex-col items-center">
+        <p>Your swiping to: <span class="text-sky-400 font-extrabold">@_direction</span></p>
+        <p>Touch Move: <span class="text-sky-400 font-extrabold">@_touches</span></p>
+    </div>
+    <IOGesture.Components.IOGesture Classes="flex items-center bg-sky-400 w-full rounded-xl p-10 text-black" @ref="_panMoveInstance" OnPanMove="HanldeOnPanMove">
+        <Content>
+            <p class="font-bold">Pan Move</p>
+        </Content>
+    </IOGesture.Components.IOGesture>
+</div>
+
+<div class="relative flex flex-col flex-grow bg-[#1f293c] p-10 mt-10 rounded mb-10 overflow-hidden">
+    <div class="flex flex-col items-center text-white gap-4">
+        <div class="flex flex-col items-center translate-x-7">
+            <p>Touch Move:  <span class="text-sky-400 font-extrabold">@_touches1</span></p>
+            <p>Touch End: <span class="text-sky-400 font-extrabold">@_touchesEnd</span></p>
+        </div>
+        <IOGesture.Components.IOGesture Classes="flex items-center user-select-none transform bg-fuchsia-400 w-full rounded-xl p-10 text-black" Styles="@_moveStyle" @ref="_panMovingInstance" OnPanMove="HanldeOnPanMove1" OnPanEnd="HandleOnPanEnd1">
+            <Content>
+                <p class="font-bold">Pan Moving</p>
+            </Content>
+        </IOGesture.Components.IOGesture>
+    </div>
+</div>
+
+<div class=" flex flex-col flex-grow bg-[#1f293c] p-10 mt-10 rounded mb-10 overflow-hidden  ">
+    <div class="flex flex-col items-center text-white gap-4">
+        <div class="flex flex-col items-center translate-x-7">
+            <p>Swipe Direction:  <span class="text-sky-400 font-extrabold">@_swipeDirection</span></p>
+        </div>
+        <div class="relative w-full">
+            <IOGesture.Components.IOGesture Classes="relative z-30 flex items-center user-select-none transform transition-transform duration-100 ease-out bg-fuchsia-400 w-full rounded-xl p-10 text-black" Options="_swipeOpts" Styles="@_swipeStyle" @ref="_swipeInstance" OnPanMove="HandleOnPanMove2" OnSwipeRight="HandelOnSwipleRight" OnSwipeLeft="HandleOnSwipeLeft">
+                <Content>
+                    <p class="font-bold">Swipe</p>
+                </Content>
+            </IOGesture.Components.IOGesture>
+            <div class="absolute top-0 left-0 z-10 flex items-center user-select-none ease-out bg-sky-400 w-1/2 h-full rounded-xl p-10 text-black">
+                <h2>Swiped Right</h2>
+            </div>
+            <div class="absolute top-0 right-0 z-10 flex flex-row-reverse items-end user-select-none ease-out bg-white w-1/2 h-full rounded-xl p-10 text-black">
+                <h2>Swiped Left</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="relative flex flex-col flex-grow bg-[#1f293c] p-10 mt-10 rounded mb-10 overflow-hidden">
+    <div class="flex flex-col items-center text-white gap-4 transition-transform">
+        <IOGesture.Components.IOGesture Classes="flex items-center user-select-none transform transition-transform bg-fuchsia-400 w-full rounded-xl p-10 text-black" Styles="@_tapStyle" OnTap="HandleOnTap">
+            <Content>
+                <p class="font-bold">Tab</p>
+            </Content>
+        </IOGesture.Components.IOGesture>
+    </div>
+</div>
+
+<div class="relative flex flex-col flex-grow bg-[#1f293c] p-10 mt-10 rounded mb-10 overflow-hidden">
+    <div class="flex flex-col items-center text-white gap-4 transition-transform">
+        <IOGesture.Components.IOGesture Classes="flex items-center user-select-none transform transition-transform bg-fuchsia-400 w-full rounded-xl p-10 text-black" Styles="@_doubleTapStyle" OnLongPress="HandleOnDoubleTap">
+            <Content>
+                <p class="font-bold">Double Tab</p>
+            </Content>
+        </IOGesture.Components.IOGesture>
+    </div>
+</div>
+
+<div class="relative flex flex-col flex-grow bg-[#1f293c] p-10 mt-10 rounded mb-10 overflow-hidden">
+    <div class="flex flex-col items-center text-white gap-4 transition-transform">
+        <IOGesture.Components.IOGesture Classes="flex items-center user-select-none transition-colors duration-300 w-full rounded-xl p-10 text-black"  Styles="@_longPressStyle" OnLongPress="HandleOnLongPress">
+            <Content>
+                <p class="font-bold">Long Press</p>
+            </Content>
+        </IOGesture.Components.IOGesture>
+    </div>
+</div>
+@code
+{
+    Components.SwipeDirection _direction;
+    IOGesture.Components.IOGesture _panMoveInstance = null!;
+    IOGesture.Components.IOGesture _panMovingInstance = null!;
+    IOGesture.Components.IOGesture _swipeInstance = null!;
+    
+    IOGesture.Components.GestureOptions _swipeOpts = new() {VelocityThreshold = 0};
+    
+    string _touches = "X: 0, Y: 0";
+    
+    string _moveStyle = String.Empty;
+    string _touches1 = "X: 0, Y:0";
+    string _touchesEnd = "X:0, Y:0";
+
+    string _swipeStyle = string.Empty;
+    string _swipeDirection = "None";
+
+    string _tapStyle = string.Empty;
+    string _doubleTapStyle = String.Empty;
+    string _longPressStyle = "background-color: #e879f9";
+    
+    public void HanldeOnPanMove()
+    {
+        _direction = _panMoveInstance.Properties.Direction;
+        _touches = $"X: {_panMoveInstance.Properties.TouchMoveX}, Y: {_panMoveInstance.Properties.TouchMoveY}";
+    }
+
+    public void HanldeOnPanMove1()
+    {
+
+        _touches1 = $"X: {_panMovingInstance.Properties.TouchMoveX}, Y: {_panMovingInstance.Properties.TouchMoveY}";
+        _moveStyle = $"transform: translateX({_panMovingInstance.Properties.TouchMoveX}px) translateY({_panMovingInstance.Properties.TouchMoveY}px)";
+        StateHasChanged();
+    }
+
+    public void HandleOnPanEnd1()
+    {
+        _touchesEnd = $"X: {_panMovingInstance.Properties.TouchEndX}, Y: {_panMovingInstance.Properties.TouchEndY}";
+        _moveStyle = $"transform: translateX(0px) translateY(0px)";
+        StateHasChanged();
+    }
+
+    public void HandleOnPanMove2()
+    {
+        _swipeDirection = _swipeInstance.Properties.SwipingDirection;
+        StateHasChanged();
+    }
+    public async Task HandelOnSwipleRight()
+    {
+        _swipeStyle = $"transform: translateX(40%)";
+        await Task.Delay(2000);
+        _swipeStyle = $"transform: translateX(0)";
+        StateHasChanged();
+    }
+
+    public async Task HandleOnSwipeLeft()
+    {
+        _swipeStyle = $"transform: translateX(-40%)";
+        await Task.Delay(2000);
+        _swipeStyle = $"transform: translateX(0)";
+        StateHasChanged();
+    }
+
+    public async Task HandleOnTap()
+    {
+        _tapStyle = "transform: scale(1.1)";
+        await Task.Delay(1000);
+        _tapStyle = "transform: scale(1)";
+        StateHasChanged();
+    }
+
+    public async Task HandleOnDoubleTap()
+    {
+
+        _doubleTapStyle = "transform: scale(1.1)";
+        await Task.Delay(1000);
+        _doubleTapStyle = "transform: scale(1)";
+        StateHasChanged();
+    }
+
+    public async Task HandleOnLongPress()
+    {
+
+        _longPressStyle = "background-color: #bae6fd";
+        await Task.Delay(1000);
+        _longPressStyle = "background-color: #e879f9";
+        StateHasChanged();
+    }
+}
