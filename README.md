@@ -17,13 +17,13 @@ A lightweight and easy-to-use library for handling touch and gesture events in B
 :information_source: For more information please check the [TinyGesture](https://github.com/sciactive/tinygesture) repository.
 ## Getting Started
 ### Installation
-1.Install [IOGesture](https://www.nuget.org/packages/IOGesture) with dotnet cli in your Blazor app.
+1. Install [IOGesture](https://www.nuget.org/packages/IOGesture) with dotnet cli in your Blazor app.
 
   ```sh
   dotnet add package IOGesture 
   ```
 
-2.Add the tinygesture.js and IOGesture.js script tag in your root file **_Host.cshtml for Blazor Server Apps** or **index.html for Blazor WebAssembly Apps**:
+2. Add the tinygesture.js and IOGesture.js script tag in your root file **_Host.cshtml for Blazor Server Apps** or **index.html for Blazor WebAssembly Apps**:
   ```html
 
   <script src="_framework/blazor.server.js"></script>
