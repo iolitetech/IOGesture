@@ -4,6 +4,14 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Title>IOGesture</Title>
+    <Authors>IOLite</Authors>
+    <Description>A lightweight and easy-to-use library for handling touch and gesture events in Blazor applications. This wrapper is built on top of the TinyGesture library and provides seamless integration with Blazor components.</Description>
+    <PackageProjectUrl>https://github.com/iolitetech/IOGesture</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/iolitetech/IOGesture/blob/master/LICENSE.txt</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/iolitetech/IOGesture</RepositoryUrl>
+    <PackageTags>Blazor,BlazorInterop,BlazorGesture,Gesture, WASM, WebAssembly, tinygesture, Blazor Server, Blazor Web</PackageTags>
   </PropertyGroup>
 
 
