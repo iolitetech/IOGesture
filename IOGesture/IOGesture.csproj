@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -9,9 +9,14 @@
     <Authors>IOLite</Authors>
     <Description>A lightweight and easy-to-use library for handling touch and gesture events in Blazor applications. This wrapper is built on top of the TinyGesture library and provides seamless integration with Blazor components.</Description>
     <PackageProjectUrl>https://github.com/iolitetech/IOGesture</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/iolitetech/IOGesture/blob/master/LICENSE.txt</PackageLicenseUrl>
+    <PackageLicense>LICENSE.txt</PackageLicense>
     <RepositoryUrl>https://github.com/iolitetech/IOGesture</RepositoryUrl>
-    <PackageTags>Blazor,BlazorInterop,BlazorGesture,Gesture, WASM, WebAssembly, tinygesture, Blazor Server, Blazor Web</PackageTags>
+    <PackageTags>Blazor BlazorInterop BlazorGesture Gesture WASM WebAssembly tinygesture BlazorServer BlazorWeb</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageIcon>Iolite.png</PackageIcon>
+    <NeutralLanguage>en-001</NeutralLanguage>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
 
@@ -48,6 +53,24 @@
     <_ContentIncludedByDefault Remove="wwwroot\js\PanMoveModel.js.map" />
     <_ContentIncludedByDefault Remove="wwwroot\js\tinygesture.js" />
     <_ContentIncludedByDefault Remove="wwwroot\js\tinygesture.js.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Iolite.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
