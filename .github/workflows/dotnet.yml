@@ -37,8 +37,8 @@ jobs:
     - name: Publish Blazor	
       run: dotnet publish ./IOGesture.Test/IOGesture.Test.csproj -c Release -o release --nologo	
 
-    - name: Change base-tag in index.html from / to ArartMorse	
-      run: sed -i 's/<base href="\/" \/>/<base href="\/IOGesture\/" \/>/g' release/wwwroot/index.html	
+    - name: Change base-tag in index.html from / to IOGesture	
+      run: sed -i 's/<base href="\/" \/>/<base href="\/IOGesture.Test\/" \/>/g' release/wwwroot/index.html	
 
     - name: Add .nojekyll file	
       run: touch release/wwwroot/.nojekyll	
