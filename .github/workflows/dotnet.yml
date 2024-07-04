@@ -38,7 +38,7 @@ jobs:
       run: dotnet publish ./IOGesture.Test/IOGesture.Test.csproj -c Release -o release --nologo	
 
     - name: Change base-tag in index.html from / to IOGesture.Test	
-      run: sed -i 's/<base href="\/" \/>/<base href="\/IOGesture/IOGesture.Test/" \/>/g' release/wwwroot/index.html	
+      run: sed -i 's|<base href="/" />|<base href="/IOGesture/IOGesture.Test/" />|g' release/wwwroot/index.html	
 
     - name: Add .nojekyll file	
       run: touch release/wwwroot/.nojekyll	
