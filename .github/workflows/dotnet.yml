@@ -35,7 +35,7 @@ jobs:
       
     # Publishes Blazor project to the release folder
     - name: Publish Blazor
-      run: dotnet publish ./IOGesture/IOGesture.Test/IOGesture.Test.csproj -c Release -o release --nologo
+      run: dotnet publish ./IOGesture.Test/IOGesture.Test.csproj -c Release -o release --nologo
       
     - name: Change base-tag in index.html from / to /IOGesture/IOGesture.Test/
       run: sed -i 's|<base href="/" />|<base href="/IOGesture/IOGesture.Test/" />|g' release/wwwroot/index.html
