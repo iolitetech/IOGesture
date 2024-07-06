@@ -5,11 +5,11 @@ using IOGesture.Models;
 namespace IOGesture.Components
 {
     
-    public partial class IOGesture : IAsyncDisposable
+    public partial class Gesture : IAsyncDisposable
     {
         private ElementReference container;
 
-        private DotNetObjectReference<IOGesture>? _dotNetHelper = null;
+        private DotNetObjectReference<Gesture>? _dotNetHelper = null;
         private const string InteropNameSpace = "ioGesture";
         
         [Inject] 
@@ -125,7 +125,7 @@ namespace IOGesture.Components
         public GestureProperties Properties { get; internal set; } = new();
         
 
-        public IOGesture()
+        public Gesture()
         {
             _dotNetHelper = DotNetObjectReference.Create(this);
         }

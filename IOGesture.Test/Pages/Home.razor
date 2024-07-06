@@ -6,11 +6,11 @@
         <p>Your swiping to: <span class="text-sky-400 font-extrabold">@_direction</span></p>
         <p>Touch Move: <span class="text-sky-400 font-extrabold">@_touches</span></p>
     </div>
-    <IOGesture.Components.IOGesture Classes="flex items-center bg-sky-400 w-full rounded-xl p-10 text-black" @ref="_panMoveInstance" OnPanMove="HanldeOnPanMove">
+    <Gesture Classes="flex items-center bg-sky-400 w-full rounded-xl p-10 text-black" @ref="_panMoveInstance" OnPanMove="HanldeOnPanMove">
         <Content>
             <p class="font-bold">Pan Move</p>
         </Content>
-    </IOGesture.Components.IOGesture>
+    </Gesture>
 </div>
 
 <div class="relative flex flex-col flex-grow bg-[#1f293c] p-10 mt-10 rounded mb-10 overflow-hidden">
@@ -19,11 +19,11 @@
             <p>Touch Move:  <span class="text-sky-400 font-extrabold">@_touches1</span></p>
             <p>Touch End: <span class="text-sky-400 font-extrabold">@_touchesEnd</span></p>
         </div>
-        <IOGesture.Components.IOGesture Classes="flex items-center user-select-none transform bg-fuchsia-400 w-full rounded-xl p-10 text-black" Styles="@_moveStyle" @ref="_panMovingInstance" OnPanMove="HanldeOnPanMove1" OnPanEnd="HandleOnPanEnd1">
+        <Gesture Classes="flex items-center user-select-none transform bg-fuchsia-400 w-full rounded-xl p-10 text-black" Styles="@_moveStyle" @ref="_panMovingInstance" OnPanMove="HanldeOnPanMove1" OnPanEnd="HandleOnPanEnd1">
             <Content>
                 <p class="font-bold">Pan Moving</p>
             </Content>
-        </IOGesture.Components.IOGesture>
+        </Gesture>
     </div>
 </div>
 
@@ -33,11 +33,11 @@
             <p>Swipe Direction:  <span class="text-sky-400 font-extrabold">@_swipeDirection</span></p>
         </div>
         <div class="relative w-full">
-            <IOGesture.Components.IOGesture Classes="relative z-30 flex items-center user-select-none transform transition-transform duration-100 ease-out bg-fuchsia-400 w-full rounded-xl p-10 text-black" Options="_swipeOpts" Styles="@_swipeStyle" @ref="_swipeInstance" OnPanMove="HandleOnPanMove2" OnSwipeRight="HandelOnSwipleRight" OnSwipeLeft="HandleOnSwipeLeft">
+            <Gesture Classes="relative z-30 flex items-center user-select-none transform transition-transform duration-100 ease-out bg-fuchsia-400 w-full rounded-xl p-10 text-black" Options="_swipeOpts" Styles="@_swipeStyle" @ref="_swipeInstance" OnPanMove="HandleOnPanMove2" OnSwipeRight="HandelOnSwipleRight" OnSwipeLeft="HandleOnSwipeLeft">
                 <Content>
                     <p class="font-bold">Swipe</p>
                 </Content>
-            </IOGesture.Components.IOGesture>
+            </Gesture>
             <div class="absolute top-0 left-0 z-10 flex items-center user-select-none ease-out bg-sky-400 w-1/2 h-full rounded-xl p-10 text-black">
                 <h2>Swiped Right</h2>
             </div>
@@ -50,41 +50,41 @@
 
 <div class="relative flex flex-col flex-grow bg-[#1f293c] p-10 mt-10 rounded mb-10 overflow-hidden">
     <div class="flex flex-col items-center text-white gap-4 transition-transform">
-        <IOGesture.Components.IOGesture Classes="flex items-center user-select-none transform transition-transform bg-fuchsia-400 w-full rounded-xl p-10 text-black" Styles="@_tapStyle" OnTap="HandleOnTap">
+        <Gesture Classes="flex items-center user-select-none transform transition-transform bg-fuchsia-400 w-full rounded-xl p-10 text-black" Styles="@_tapStyle" OnTap="HandleOnTap">
             <Content>
                 <p class="font-bold">Tab</p>
             </Content>
-        </IOGesture.Components.IOGesture>
+        </Gesture>
     </div>
 </div>
 
 <div class="relative flex flex-col flex-grow bg-[#1f293c] p-10 mt-10 rounded mb-10 overflow-hidden">
     <div class="flex flex-col items-center text-white gap-4 transition-transform">
-        <IOGesture.Components.IOGesture Classes="flex items-center user-select-none transform transition-transform bg-fuchsia-400 w-full rounded-xl p-10 text-black" Styles="@_doubleTapStyle" OnLongPress="HandleOnDoubleTap">
+        <Gesture Classes="flex items-center user-select-none transform transition-transform bg-fuchsia-400 w-full rounded-xl p-10 text-black" Styles="@_doubleTapStyle" OnLongPress="HandleOnDoubleTap">
             <Content>
                 <p class="font-bold">Double Tab</p>
             </Content>
-        </IOGesture.Components.IOGesture>
+        </Gesture>
     </div>
 </div>
 
 <div class="relative flex flex-col flex-grow bg-[#1f293c] p-10 mt-10 rounded mb-10 overflow-hidden">
     <div class="flex flex-col items-center text-white gap-4 transition-transform">
-        <IOGesture.Components.IOGesture Classes="flex items-center user-select-none transition-colors duration-300 w-full rounded-xl p-10 text-black"  Styles="@_longPressStyle" OnLongPress="HandleOnLongPress">
+        <Gesture Classes="flex items-center user-select-none transition-colors duration-300 w-full rounded-xl p-10 text-black"  Styles="@_longPressStyle" OnLongPress="HandleOnLongPress">
             <Content>
                 <p class="font-bold">Long Press</p>
             </Content>
-        </IOGesture.Components.IOGesture>
+        </Gesture>
     </div>
 </div>
 @code
 {
-    Components.SwipeDirection _direction;
-    IOGesture.Components.IOGesture _panMoveInstance = null!;
-    IOGesture.Components.IOGesture _panMovingInstance = null!;
-    IOGesture.Components.IOGesture _swipeInstance = null!;
+    SwipeDirection _direction;
+    Gesture _panMoveInstance = null!;
+    Gesture _panMovingInstance = null!;
+    Gesture _swipeInstance = null!;
     
-    IOGesture.Components.GestureOptions _swipeOpts = new() {VelocityThreshold = 0};
+    GestureOptions _swipeOpts = new() {VelocityThreshold = 0};
     
     string _touches = "X: 0, Y: 0";
     
