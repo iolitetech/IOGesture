@@ -31,27 +31,27 @@ A lightweight and easy-to-use library for handling touch and gesture events in B
   <script src="_content/IOGesture/js/tinygesture.js" type="module"></script>
   ```
 ## Usage
-Use the `IOGesture.Components` and use the component: 
+Use the `IOGesture.Components` then you can use the component: 
 ```Razor
 @using IOGesture.Components
 
-<IOGesture>
+<Gesture>
   <h1>Swipe me.</h1>
-</IOGesture>
+</Gesture>
 ```
-Then you can listen to gesture event callbacks and pass the options with type of `GestureOptions`, You can access various properties of the gesture using the `Properties` object after you referenced the `IOGesture` instance:
+Then you can listen to gesture event callbacks and pass the options with type of `GestureOptions`, You can access various properties of the gesture using the `Properties` object after you referenced the `Gesture` instance:
 ```Razor
-<IOGesture 
+<Gesture 
     @ref="ioGesture"
     OnPanMove="HandlePanMove"
     Options="gestureOptions">
     <Content>
         <!-- Your content here -->
     </Content>
-</IOGesture>
+</Gesture>
 
 @code {
-    private IOGesture? ioGesture;
+    private Gesture? ioGesture;
     private GestureOptions gestureOptions = new GestureOptions
     {
         VelocityThreshold = 10,
