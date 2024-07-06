@@ -39,7 +39,6 @@ window.ioGesture = {
             });
 
             instance.on("panmove", async event => {
-                console.log("panmove")
                 const args = {
                     touchStartX: instance.touchStartX,
                     touchStartY: instance.touchStartY,
