@@ -25,13 +25,13 @@ jobs:
     - name: Add AOT Workload
       run: |
         dotnet workload install wasm-tools-net7
-        dotnet workload restore
+        dotnet workload restore ./IOGesture.Test/IOGesture.Test.csproj
        
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ./IOGesture.Test/IOGesture.Test.csproj
       
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build ./IOGesture.Test/IOGesture.Test.csproj --no-restore
       
     # Publishes Blazor project to the release folder
     - name: Publish Blazor
