@@ -31,7 +31,7 @@ jobs:
       run: dotnet restore ./IOGesture/IOGesture.Test/IOGesture.Test.csproj
       
     - name: Build
-      run: dotnet build ./IOGesture/IOGesture.Test/IOGesture.Test.csproj --no-restore
+      run: dotnet build ./IOGesture.Test/IOGesture.Test.csproj --no-restore
       
     # Publishes Blazor project to the release folder
     - name: Publish Blazor
