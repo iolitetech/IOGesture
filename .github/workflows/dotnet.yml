@@ -28,10 +28,10 @@ jobs:
         dotnet workload restore
        
     - name: Restore dependencies
-      run: dotnet restore ./IOGesture/IOGesture.Test/IOGesture.Test.csproj
+      run: dotnet restore
       
     - name: Build
-      run: dotnet build ./IOGesture.Test/IOGesture.Test.csproj --no-restore
+      run: dotnet build --no-restore
       
     # Publishes Blazor project to the release folder
     - name: Publish Blazor
