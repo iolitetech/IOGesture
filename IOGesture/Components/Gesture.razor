@@ -1,4 +1,9 @@
-﻿<div @ref="container" style="@Styles" class="@Classes">
+﻿<div @ref="_container" 
+     id="@Id"
+     style="@Styles" 
+     class="@Classes"
+     @attributes="@Attributes"
+     aria-label="@Labels">
 @ChildContent
 </div>
 

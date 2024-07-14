@@ -7,30 +7,46 @@ namespace IOGesture.Components
     
     public partial class Gesture : IAsyncDisposable
     {
-        private ElementReference container;
+        private ElementReference _container;
 
         private DotNetObjectReference<Gesture>? _dotNetHelper = null;
         private const string InteropNameSpace = "ioGesture";
         
         [Inject] 
         public IJSRuntime _JsRuntime { get; set; }
-        
+
         /// <summary>
         /// CSS classes to be applied to the component.
         /// </summary>
         [Parameter]
-        public string Classes { get; set; }
+        public string? Classes { get; set; } = null;
+
         /// <summary>
         /// CSS styles to be applied to the component.
         /// </summary>
         [Parameter]
-        public string Styles { get; set; }
+        public string? Styles { get; set; } = null;
+        /// <summary>
+        /// Gets or sets the id as it will be used in the HTML.
+        /// </summary>
+        [Parameter] 
+        public string? Id { get; set; } = null;
+        /// <summary>
+        /// Labels to be applied to the component.
+        /// </summary>
+        [Parameter] 
+        public string? Labels { get; set; } = null;
         /// <summary>
         /// Content to be rendered inside the component.
         /// </summary>
         [Parameter]
         public RenderFragment? ChildContent { get; set; }
         
+        /// <summary>
+        /// HTML attributes to be applied to the component.
+        /// </summary>
+        [Parameter(CaptureUnmatchedValues = true)]
+        public IReadOnlyDictionary<string, object> Attributes { get; set; }
         /// <summary>
         /// Options for configuring gesture behavior.
         /// </summary>
@@ -135,7 +151,7 @@ namespace IOGesture.Components
             {
                 if (Options is null)
                     Options = new GestureOptions();
-                if (container.Context is not null)
+                if (_container.Context is not null)
                 {
                     InstanceId = await Create();
                 }
@@ -144,7 +160,7 @@ namespace IOGesture.Components
 
         internal async ValueTask<int> Create()
         {
-           return await _JsRuntime.InvokeAsync<int>($"{InteropNameSpace}.create", container, Options, _dotNetHelper);
+           return await _JsRuntime.InvokeAsync<int>($"{InteropNameSpace}.create", _container, Options, _dotNetHelper);
         }
 
         [JSInvokable]
