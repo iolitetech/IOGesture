@@ -29,7 +29,7 @@ namespace IOGesture.Components
         /// Content to be rendered inside the component.
         /// </summary>
         [Parameter]
-        public RenderFragment? Content { get; set; }
+        public RenderFragment? ChildContent { get; set; }
         
         /// <summary>
         /// Options for configuring gesture behavior.
