@@ -63,7 +63,7 @@ Then you can listen to gesture event callbacks and pass the options with type of
 
     private void HandlePanMove()
     {
-        Console.WriteLine($"X: {_panMovingInstance.Properties.TouchMoveX}, Y: {_panMovingInstance.Properties.TouchMoveY}");
+        Console.WriteLine($"X: {ioGesture.Properties.TouchMoveX}, Y: {ioGesture.Properties.TouchMoveY}");
     }
 
     private void HandleSwipeLeft()
