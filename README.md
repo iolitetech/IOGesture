@@ -45,9 +45,7 @@ Then you can listen to gesture event callbacks and pass the options with type of
     @ref="ioGesture"
     OnPanMove="HandlePanMove"
     Options="gestureOptions">
-    <ChildContent>
         <!-- Your content here -->
-    </ChildContent>
 </Gesture>
 
 @code {
