@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="IOGesture/IOGesture.csproj" />
+  <Project Path="IOGesture.Test/IOGesture.Test.csproj" />
+</Solution>

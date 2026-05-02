@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using IOGesture.Models;
 
@@ -8,12 +8,13 @@ namespace IOGesture.Components
     public partial class Gesture : IAsyncDisposable
     {
         private ElementReference _container;
+        private IJSObjectReference? _module;
+        private DotNetObjectReference<Gesture>? _dotNetHelper;
+        private int _instanceId = -1;
+        private bool _disposed;
 
-        private DotNetObjectReference<Gesture>? _dotNetHelper = null;
-        private const string InteropNameSpace = "ioGesture";
-        
         [Inject] 
-        public IJSRuntime _JsRuntime { get; set; }
+        public IJSRuntime JsRuntime { get; set; } = default!;
 
         /// <summary>
         /// CSS classes to be applied to the component.
@@ -46,7 +47,7 @@ namespace IOGesture.Components
         /// HTML attributes to be applied to the component.
         /// </summary>
         [Parameter(CaptureUnmatchedValues = true)]
-        public IReadOnlyDictionary<string, object> Attributes { get; set; }
+        public IReadOnlyDictionary<string, object>? Attributes { get; set; }
         /// <summary>
         /// Options for configuring gesture behavior.
         /// </summary>
@@ -137,30 +138,27 @@ namespace IOGesture.Components
         [Parameter]
         public EventCallback OnRotateEnd { get; set; }
 
-        private int InstanceId { get; set; }
         public GestureProperties Properties { get; internal set; } = new();
         
 
-        public Gesture()
-        {
-            _dotNetHelper = DotNetObjectReference.Create(this);
-        }
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
             {
-                if (Options is null)
-                    Options = new GestureOptions();
+                Options ??= new GestureOptions();
+                
+                // Load the JS module (module isolation — no window globals)
+                _module = await JsRuntime.InvokeAsync<IJSObjectReference>(
+                    "import", "./_content/IOGesture/js/IOGesture.js");
+                
+                _dotNetHelper = DotNetObjectReference.Create(this);
+                
                 if (_container.Context is not null)
                 {
-                    InstanceId = await Create();
+                    _instanceId = await _module.InvokeAsync<int>(
+                        "create", _container, Options, _dotNetHelper);
                 }
             }
-        }
-
-        internal async ValueTask<int> Create()
-        {
-           return await _JsRuntime.InvokeAsync<int>($"{InteropNameSpace}.create", _container, Options, _dotNetHelper);
         }
 
         [JSInvokable]
@@ -187,7 +185,7 @@ namespace IOGesture.Components
             Properties.IsSwipingVertical = panMoveModel.IsSwipingVertical;
             Properties.SwipingDirection = panMoveModel.SwipingDirection;
             Properties.VelocityX = panMoveModel.VelocityX;
-            Properties.VelocityY = panMoveModel.TouchMoveY;
+            Properties.VelocityY = panMoveModel.VelocityY;
             Properties.Direction = GetDirection(panMoveModel.SwipingDirection, panMoveModel.TouchMoveX,
                 panMoveModel.TouchMoveY);
                 
@@ -208,7 +206,7 @@ namespace IOGesture.Components
             Properties.IsSwipingVertical = panEndModel.IsSwipingVertical;
             Properties.SwipingDirection = panEndModel.SwipingDirection;
             Properties.VelocityX = panEndModel.VelocityX;
-            Properties.VelocityY = panEndModel.TouchMoveY;
+            Properties.VelocityY = panEndModel.VelocityY;
             Properties.TouchEndX = panEndModel.TouchEndX;
             Properties.TouchEndY = panEndModel.TouchEndY;
             Properties.Direction = GetDirection(panEndModel.SwipingDirection, panEndModel.TouchMoveX,
@@ -238,7 +236,7 @@ namespace IOGesture.Components
             Properties.IsSwipingHorizontal = isSwipedHorizontal;
             Properties.IsSwipingVertical = isSwipedVertical;
             
-            if (OnSwipeRight.HasDelegate)
+            if (OnSwipeLeft.HasDelegate)
             {
                 await OnSwipeLeft.InvokeAsync();
             }
@@ -250,7 +248,7 @@ namespace IOGesture.Components
             Properties.IsSwipingHorizontal = isSwipedHorizontal;
             Properties.IsSwipingVertical = isSwipedVertical;
             
-            if (OnSwipeRight.HasDelegate)
+            if (OnSwipeUp.HasDelegate)
             {
                 await OnSwipeUp.InvokeAsync();
             }
@@ -262,7 +260,7 @@ namespace IOGesture.Components
             Properties.IsSwipingHorizontal = isSwipedHorizontal;
             Properties.IsSwipingVertical = isSwipedVertical;
             
-            if (OnSwipeRight.HasDelegate)
+            if (OnSwipeDown.HasDelegate)
             {
                 await OnSwipeDown.InvokeAsync();
             }
@@ -336,7 +334,7 @@ namespace IOGesture.Components
             }
         }
         
-        private SwipeDirection GetDirection(string swipeDirection, double? touchMoveX, double? touchMoveY) 
+        private SwipeDirection GetDirection(string? swipeDirection, double? touchMoveX, double? touchMoveY) 
         {
             switch (swipeDirection)
             {
@@ -357,11 +355,30 @@ namespace IOGesture.Components
                    
             }
         }
+        
         public async ValueTask DisposeAsync()
         {
-            await _JsRuntime.InvokeVoidAsync("ioGesture.disposeInstance", InstanceId);
-            if (_dotNetHelper is not null)
-                _dotNetHelper.Dispose();
+            if (_disposed) return;
+            _disposed = true;
+
+            try
+            {
+                if (_module is not null && _instanceId >= 0)
+                {
+                    await _module.InvokeVoidAsync("disposeInstance", _instanceId);
+                }
+            }
+            catch (JSDisconnectedException)
+            {
+                // Blazor Server circuit disconnected — safe to ignore
+            }
+
+            if (_module is not null)
+            {
+                await _module.DisposeAsync();
+            }
+
+            _dotNetHelper?.Dispose();
         }
     }
 }

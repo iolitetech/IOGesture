@@ -1,4 +1,4 @@
-﻿class TinyGesture {
+class TinyGesture {
     constructor(element, options) {
         this.element = element;
         this.touch1 = null;
@@ -231,7 +231,7 @@
                 }
                 if (this.swipedHorizontal) {
                     if (x < 0) {
-                        if (((_f = this.velocityX) !== null && _f !== void 0 ? _f : 0) < -this.opts.velocityThreshold || distance < -this.disregardVelocityThresholdX) {
+                        if (((_f = this.velocityX) !== null && _f !== void 0 ? _f : 0) < -this.opts.velocityThreshold || distance > this.disregardVelocityThresholdX) {
                             this.fire('swipeleft', event);
                         }
                     }
@@ -243,7 +243,7 @@
                 }
                 if (this.swipedVertical) {
                     if (y < 0) {
-                        if (((_h = this.velocityY) !== null && _h !== void 0 ? _h : 0) < -this.opts.velocityThreshold || distance < -this.disregardVelocityThresholdY) {
+                        if (((_h = this.velocityY) !== null && _h !== void 0 ? _h : 0) < -this.opts.velocityThreshold || distance > this.disregardVelocityThresholdY) {
                             this.fire('swipeup', event);
                         }
                     }
